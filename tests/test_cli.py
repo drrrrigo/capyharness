@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from aih.cli import main
+from capyharness.cli import main
 
 
 class CliTests(unittest.TestCase):
@@ -30,6 +30,7 @@ class CliTests(unittest.TestCase):
             exit_code = main(["status"])
 
         self.assertEqual(exit_code, 0)
+        self.assertIn("CapyHarness", stdout.getvalue())
         self.assertIn(f"Workspace: {repository.resolve()}", stdout.getvalue())
         self.assertIn("Repository: example", stdout.getvalue())
         self.assertIn("Branch: lesson", stdout.getvalue())

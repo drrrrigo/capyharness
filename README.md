@@ -1,17 +1,19 @@
-# AI Dev Harness
+# CapyHarness
 
-AI Dev Harness (`aih`) é um projeto pessoal e educacional para construir, em pequenos marcos, um harness para agentes de IA voltados ao desenvolvimento de software. A prioridade é entender cada camada antes de automatizar a próxima.
+CapyHarness is an open-source, developer-focused AI agent harness being built incrementally as both a practical development tool and an educational exploration of agent architecture. The name belongs to the broader SleepyCapybara project.
 
-## Estado atual
+## Current state
 
-O primeiro marco implementa apenas `aih status`: identifica a raiz do repositório Git que contém o diretório atual e mostra o nome do repositório, a branch e contagens de arquivos modificados, novos e staged. O programa somente lê o estado do Git. Ainda não há modelo de IA, agente, ferramentas de escrita ou sandbox.
+This project is at **Milestone 1**. Its only command is `capyh status`, which finds the Git workspace containing the current directory and shows its root, repository name, branch, and counts of modified, untracked, and staged files. It works from a subdirectory of a repository. The command reads Git information; it does not change files or run an AI agent.
 
-## Requisitos e instalação local
+There are no model providers, agent loops, tool calls, sandbox, or filesystem tools yet.
 
-- Python 3.11 ou mais recente
-- Git disponível no `PATH`
+## Requirements and local installation
 
-Na raiz do projeto:
+- Python 3.11 or newer
+- Git available on `PATH`
+
+From the project root:
 
 ```bash
 python3 -m venv .venv
@@ -19,45 +21,57 @@ source .venv/bin/activate
 python -m pip install -e .
 ```
 
-O modo `-e` instala o pacote de forma editável: alterações em `src/aih` passam a ser usadas pelo comando instalado sem reinstalar. A aplicação e os testes usam apenas a biblioteca padrão do Python; o Git é um requisito externo.
+The `-e` flag installs the package in editable mode, so changes under `src/capyharness` are used without another installation. The application and tests have no third-party Python runtime dependencies; Git is a separate executable.
 
-## Uso
+## Usage
 
-Entre em qualquer repositório Git local, inclusive em uma subpasta, e execute:
-
-```bash
-aih status
-```
-
-Para observar as chamadas internas ao Git:
+From any local Git repository, including a nested directory:
 
 ```bash
-aih --verbose status
+capyh status
 ```
 
-`aih` sem subcomando mostra a ajuda. Fora de um repositório, `aih status` informa o problema em `stderr` e retorna código 1.
+Use `capyh --verbose status` to see debug logs. `capyh` by itself shows help. Outside a Git repository, `capyh status` prints a clear message to standard error and exits with code 1.
 
-## Testes
+## Tests
 
 ```bash
 python -m unittest discover -s tests -v
 ```
 
-Os testes criam repositórios em diretórios temporários usando `tempfile.TemporaryDirectory`. Eles não alteram nem dependem do repositório onde o projeto está sendo desenvolvido.
+Tests create and clean up temporary Git repositories. They do not rely on the repository containing this project.
 
-## Arquitetura atual
+## Architecture
 
 ```text
-src/aih/cli.py       entrada da CLI e apresentação do resultado
-src/aih/workspace.py  descoberta da raiz Git a partir do diretório atual
-src/aih/git.py        execução de comandos Git e leitura de branch/status
-tests/               verificações em repositórios temporários
+src/capyharness/cli.py       command parsing and result display
+src/capyharness/workspace.py  Git workspace discovery
+src/capyharness/git.py        Git process execution and branch/status reading
+tests/                       checks using temporary repositories
 ```
 
-O fluxo de `aih status` é: CLI → descoberta do workspace → consulta ao Git → formatação da saída. Usamos `argparse`, `subprocess`, `pathlib` e `logging` da biblioteca padrão. O Git é chamado como lista de argumentos, sem shell. A saída `--porcelain=v1 -z` do status tem formato estável e separa os caminhos com NUL, o que evita confusão com espaços ou quebras de linha em nomes de arquivos.
+The flow is CLI → workspace discovery → Git inspection → terminal output. The code uses Python's `argparse`, `subprocess`, `pathlib`, and `logging`. Git receives a list of arguments without a shell. Status uses Git's stable `--porcelain=v1 -z` format so file names are separated unambiguously.
 
-## Próximos marcos possíveis
+## Educational purpose
 
-Após revisar e compreender esta fundação, um próximo marco pequeno pode adicionar ferramentas **somente de leitura** do workspace. Integração com modelos, loops de agente, permissões, sandbox e outras camadas ficam para etapas posteriores.
+Building CapyHarness is also a way to study Python, software architecture, Git, process execution, security boundaries, AI agents and harnesses, context engineering, tool design, sandboxing, and orchestration. Each milestone should remain small enough to understand fully before the next one begins.
 
-Princípios: entender antes de automatizar; marcos pequenos; código explícito; segurança antes de autonomia; observabilidade desde o começo; um agente antes de múltiplos; ferramentas antes de orquestração; contexto importa tanto quanto o modelo; Git como rede de segurança.
+## Vision, not current functionality
+
+Future milestones may explore agent loops, model providers, tool calling, filesystem tools, deeper Git integration, context management, permissions, sandboxing, tracing, MCP, worktrees, and multi-agent orchestration. These are possible directions, **not implemented features**. The next milestone will be chosen after reviewing the current foundation.
+
+## Principles
+
+- Understand before automate.
+- Small milestones.
+- Explicit code over magic.
+- Safety before autonomy.
+- Observability from the beginning.
+- One agent before multi-agent.
+- Tools before orchestration complexity.
+- Context matters as much as the model.
+- Git is the safety net.
+
+## License
+
+MIT. Before publishing, replace `[copyright holder]` in [LICENSE](LICENSE) with the correct copyright holder name.

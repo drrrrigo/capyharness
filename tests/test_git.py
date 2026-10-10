@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from aih.git import GitStatus, get_branch, get_status
+from capyharness.git import GitStatus, get_branch, get_status
 
 
 class GitTests(unittest.TestCase):

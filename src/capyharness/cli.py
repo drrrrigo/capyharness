@@ -1,4 +1,4 @@
-"""The command-line interface for AI Dev Harness."""
+"""The command-line interface for CapyHarness."""
 
 import argparse
 import logging
@@ -6,12 +6,12 @@ import sys
 from pathlib import Path
 from collections.abc import Sequence
 
-from aih.git import GitError, get_branch, get_status
-from aih.workspace import find_repository
+from capyharness.git import GitError, get_branch, get_status
+from capyharness.workspace import find_repository
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(prog="aih", description="AI Dev Harness")
+    parser = argparse.ArgumentParser(prog="capyh", description="CapyHarness")
     parser.add_argument("--verbose", action="store_true", help="show debug logging")
     commands = parser.add_subparsers(dest="command")
     commands.add_parser("status", help="show Git workspace information")
@@ -39,7 +39,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
     print(
-        f"AI Dev Harness\n\n"
+        f"CapyHarness\n\n"
         f"Workspace: {workspace}\n"
         f"Repository: {workspace.name}\n"
         f"Branch: {branch}\n"

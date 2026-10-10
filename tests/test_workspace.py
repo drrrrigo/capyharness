@@ -3,7 +3,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from aih.workspace import find_repository
+from capyharness.workspace import find_repository
 
 
 class WorkspaceTests(unittest.TestCase):

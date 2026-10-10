@@ -3,7 +3,7 @@
 import logging
 from pathlib import Path
 
-from aih.git import run_git
+from capyharness.git import run_git
 
 logger = logging.getLogger(__name__)
 
