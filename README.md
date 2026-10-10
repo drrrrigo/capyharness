@@ -71,7 +71,3 @@ Future milestones may explore agent loops, model providers, tool calling, filesy
 - Tools before orchestration complexity.
 - Context matters as much as the model.
 - Git is the safety net.
-
-## License
-
-MIT. Before publishing, replace `[copyright holder]` in [LICENSE](LICENSE) with the correct copyright holder name.
